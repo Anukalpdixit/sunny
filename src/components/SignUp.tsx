@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Eye, EyeOff, Mail, Lock, User, Building2, Layers, ChevronDown } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
 import { signInWithPopup, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, googleProvider, linkedinProvider } from '../firebase';
 
@@ -8,8 +8,6 @@ export default function SignUp({ onNext, onSignIn }: { onNext: () => void, onSig
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [businessName, setBusinessName] = useState('');
-  const [industry, setIndustry] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
@@ -43,7 +41,6 @@ export default function SignUp({ onNext, onSignIn }: { onNext: () => void, onSig
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(userCredential.user, { displayName: fullName });
-      // In a real app, you would also save businessName and industry to Firestore here
       onNext();
     } catch (err: any) {
       console.error("Error signing up with email", err);
@@ -216,43 +213,6 @@ export default function SignUp({ onNext, onSignIn }: { onNext: () => void, onSig
                     <span className="w-1 h-1 rounded-full bg-current"></span> Passwords do not match
                   </p>
                 )}
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Business Name</label>
-              <div className="relative">
-                <input 
-                  type="text" 
-                  placeholder="Acme Corp"
-                  value={businessName}
-                  onChange={(e) => setBusinessName(e.target.value)}
-                  required
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white transition-colors"
-                />
-                <Building2 className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Industry</label>
-              <div className="relative">
-                <select
-                  value={industry}
-                  onChange={(e) => setIndustry(e.target.value)}
-                  required
-                  className={`w-full pl-10 pr-10 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white transition-colors appearance-none ${industry ? 'text-slate-900' : 'text-slate-400'}`}
-                >
-                  <option value="" disabled>Select your industry</option>
-                  <option value="technology">Technology</option>
-                  <option value="retail">Retail & E-commerce</option>
-                  <option value="healthcare">Healthcare</option>
-                  <option value="finance">Finance</option>
-                  <option value="education">Education</option>
-                  <option value="other">Other</option>
-                </select>
-                <Layers className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <ChevronDown className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
               </div>
             </div>
             

@@ -2,9 +2,21 @@ import { Briefcase, Target, Users, MapPin, Search, Check, Link, Trash2, Plus, Sw
 import { useState } from 'react';
 
 export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, onBack: () => void }) {
+  const [businessName, setBusinessName] = useState('');
+  const [industry, setIndustry] = useState('');
+  const [shortDescription, setShortDescription] = useState('');
+  const [showErrors, setShowErrors] = useState(false);
   const [selectedGoals, setSelectedGoals] = useState<string[]>(['Increase Brand Awareness', 'Website Traffic']);
   const [selectedAudience, setSelectedAudience] = useState<string>('Professionals');
   const [competitors, setCompetitors] = useState<string[]>(['']);
+
+  const handleNext = () => {
+    if (!businessName.trim() || !industry || !shortDescription.trim()) {
+      setShowErrors(true);
+      return;
+    }
+    onNext();
+  };
 
   const updateCompetitor = (index: number, value: string) => {
     const newCompetitors = [...competitors];
@@ -38,11 +50,11 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
   ];
 
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 font-sans">
-      <div className="bg-white rounded-3xl shadow-xl w-full max-w-[922px] flex overflow-hidden h-[610px]">
+    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 py-8 font-sans">
+      <div className="bg-white rounded-3xl shadow-xl w-full max-w-[922px] flex overflow-hidden my-auto">
         
         {/* Main Content - Form */}
-        <div className="w-full p-6 lg:p-10 flex flex-col overflow-y-auto">
+        <div className="w-full p-6 lg:p-10 flex flex-col">
           <div className="mb-6">
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 mb-2">
               Tell us about your business
@@ -67,31 +79,44 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                 <label className="block text-xs font-medium text-slate-700 mb-1">Business Name <span className="text-red-500">*</span></label>
                 <input 
                   type="text" 
+                  value={businessName}
+                  onChange={(e) => setBusinessName(e.target.value)}
                   placeholder="e.g. Acme Corp"
-                  className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors"
+                  className={`w-full px-3 py-2 bg-white border ${showErrors && !businessName.trim() ? 'border-red-500' : 'border-slate-200'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors`}
                 />
+                {showErrors && !businessName.trim() && <p className="text-red-500 text-[10px] mt-1">Business Name is required</p>}
               </div>
               <div>
                 <label className="block text-xs font-medium text-slate-700 mb-1">Industry <span className="text-red-500">*</span></label>
-                <select className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors appearance-none">
+                <select 
+                  value={industry}
+                  onChange={(e) => setIndustry(e.target.value)}
+                  className={`w-full px-3 py-2 bg-white border ${showErrors && !industry ? 'border-red-500' : 'border-slate-200'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors appearance-none`}
+                >
                   <option value="">Select an industry</option>
                   <option value="tech">Technology</option>
                   <option value="retail">Retail</option>
                   <option value="services">Professional Services</option>
                 </select>
+                {showErrors && !industry && <p className="text-red-500 text-[10px] mt-1">Industry is required</p>}
               </div>
             </div>
             
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Short Description <span className="text-red-500">*</span></label>
+              <div className="flex justify-between items-end mb-1">
+                <label className="block text-xs font-medium text-slate-700">Short Description <span className="text-red-500">*</span></label>
+                <span className={`text-[10px] ${shortDescription.length > 200 ? 'text-red-500 font-medium' : 'text-slate-500 font-medium'}`}>
+                  {shortDescription.length}/200 characters
+                </span>
+              </div>
               <textarea 
+                value={shortDescription}
+                onChange={(e) => setShortDescription(e.target.value)}
                 placeholder="Briefly describe what your business does..."
                 rows={2}
-                className="w-full px-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors resize-none"
+                className={`w-full px-3 py-2 bg-white border ${showErrors && !shortDescription.trim() ? 'border-red-500' : 'border-slate-200'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors resize-none`}
               ></textarea>
-              <div className="text-right mt-1">
-                <span className="text-[10px] text-slate-400">0/200 characters</span>
-              </div>
+              {showErrors && !shortDescription.trim() && <p className="text-red-500 text-[10px] mt-1">Short Description is required</p>}
             </div>
           </div>
           
@@ -240,7 +265,7 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
           </div>
           
           <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
-            <button onClick={onNext} className="text-xs text-slate-400 hover:text-slate-600 font-medium transition-colors">
+            <button onClick={handleNext} className="text-xs text-slate-400 hover:text-slate-600 font-medium transition-colors">
               Skip
             </button>
             <div className="flex items-center gap-4">
@@ -248,7 +273,7 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
                 Back
               </button>
-              <button onClick={onNext} className="text-yellow-500 hover:text-yellow-600 text-xs font-bold transition-colors flex items-center gap-1">
+              <button onClick={handleNext} className="text-yellow-500 hover:text-yellow-600 text-xs font-bold transition-colors flex items-center gap-1">
                 Next
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
               </button>

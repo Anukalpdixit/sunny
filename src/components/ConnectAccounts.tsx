@@ -2,11 +2,11 @@ import { ShieldAlert, Check, Share2 } from 'lucide-react';
 
 export default function ConnectAccounts({ onNext, onBack }: { onNext: () => void, onBack: () => void }) {
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 font-sans">
-      <div className="bg-white rounded-3xl shadow-xl w-full max-w-[922px] flex overflow-hidden h-[610px]">
+    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 py-8 font-sans">
+      <div className="bg-white rounded-3xl shadow-xl w-full max-w-[922px] flex overflow-hidden my-auto">
         
         {/* Main Content - Form */}
-        <div className="w-full p-4 lg:p-6 flex flex-col overflow-y-auto">
+        <div className="w-full p-4 lg:p-6 flex flex-col">
           <div className="mb-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <h1 className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
               <Share2 className="w-5 h-5 text-yellow-500" />

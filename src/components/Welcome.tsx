@@ -2,8 +2,8 @@ import { Check } from 'lucide-react';
 
 export default function Welcome({ onNext }: { onNext: () => void }) {
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 font-sans">
-      <div className="bg-white rounded-3xl shadow-xl w-full max-w-[922px] flex overflow-hidden h-[610px]">
+    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 py-8 font-sans">
+      <div className="bg-white rounded-3xl shadow-xl w-full max-w-[922px] flex overflow-hidden my-auto">
         
         {/* Left Column - Content */}
         <div className="w-full lg:w-1/2 p-6 lg:p-10 flex flex-col">
@@ -16,7 +16,7 @@ export default function Welcome({ onNext }: { onNext: () => void }) {
           <h2 className="text-2xl font-bold text-slate-900 mb-1">Welcome to SUNNY</h2>
           <p className="text-sm text-slate-500 mb-6">Your AI Social Media Manager</p>
           
-          <div className="space-y-4 mb-6 flex-1 overflow-y-auto pr-2">
+          <div className="space-y-4 mb-6 flex-1 pr-2">
             <div className="flex gap-3">
               <div className="mt-0.5 w-5 h-5 rounded-full bg-yellow-50 flex items-center justify-center flex-shrink-0">
                 <Check className="w-3 h-3 text-yellow-600" />

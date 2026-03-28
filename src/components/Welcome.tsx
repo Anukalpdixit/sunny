@@ -3,7 +3,7 @@ import { Check } from 'lucide-react';
 export default function Welcome({ onNext }: { onNext: () => void }) {
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 py-8 font-sans">
-      <div className="bg-white rounded-3xl shadow-xl w-full max-w-[922px] flex overflow-hidden my-auto">
+      <div className="onboarding-card">
         
         {/* Left Column - Content */}
         <div className="w-full lg:w-1/2 p-6 lg:p-10 flex flex-col">
@@ -148,7 +148,7 @@ export default function Welcome({ onNext }: { onNext: () => void }) {
             </div>
             
             {/* Two smaller cards */}
-            <div className="flex gap-4">
+            <div className="flex gap-4 mt-12">
               <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-100 flex-1">
                 <div className="w-6 h-6 rounded bg-yellow-50 text-yellow-500 flex items-center justify-center mb-2">
                   <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z" /></svg>

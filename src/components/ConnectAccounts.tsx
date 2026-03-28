@@ -3,7 +3,7 @@ import { ShieldAlert, Check, Share2 } from 'lucide-react';
 export default function ConnectAccounts({ onNext, onBack }: { onNext: () => void, onBack: () => void }) {
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 py-8 font-sans">
-      <div className="bg-white rounded-3xl shadow-xl w-full max-w-[922px] flex overflow-hidden my-auto">
+      <div className="onboarding-card">
         
         {/* Main Content - Form */}
         <div className="w-full p-4 lg:p-6 flex flex-col">

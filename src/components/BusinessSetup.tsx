@@ -1,9 +1,37 @@
-import { Briefcase, Target, Users, MapPin, Search, Check, Link, Trash2, Plus, Swords } from 'lucide-react';
-import { useState } from 'react';
+import { Briefcase, Target, Users, MapPin, Search, Check, Link, Trash2, Plus, Swords, ChevronDown } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+
+const industriesList = [
+  { value: 'tech', label: 'Technology & Software' },
+  { value: 'retail', label: 'Retail & E-commerce' },
+  { value: 'services', label: 'Professional Services' },
+  { value: 'healthcare', label: 'Healthcare & Wellness' },
+  { value: 'finance', label: 'Finance & Insurance' },
+  { value: 'education', label: 'Education & E-learning' },
+  { value: 'realestate', label: 'Real Estate' },
+  { value: 'food', label: 'Food & Beverage' },
+  { value: 'entertainment', label: 'Media & Entertainment' },
+  { value: 'travel', label: 'Travel & Hospitality' },
+  { value: 'manufacturing', label: 'Manufacturing' },
+  { value: 'nonprofit', label: 'Non-Profit & Charity' },
+  { value: 'other', label: 'Other' },
+];
 
 export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, onBack: () => void }) {
   const [businessName, setBusinessName] = useState('');
   const [industry, setIndustry] = useState('');
+  const [isIndustryOpen, setIsIndustryOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsIndustryOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
   const [shortDescription, setShortDescription] = useState('');
   const [showErrors, setShowErrors] = useState(false);
   const [selectedGoals, setSelectedGoals] = useState<string[]>(['Increase Brand Awareness', 'Website Traffic']);
@@ -51,13 +79,13 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
 
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 py-8 font-sans">
-      <div className="bg-white rounded-3xl shadow-xl w-full max-w-[922px] flex overflow-hidden my-auto">
+      <div className="onboarding-card">
         
         {/* Main Content - Form */}
         <div className="w-full p-6 lg:p-10 flex flex-col">
           <div className="mb-6">
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 mb-2">
-              Tell us about your business
+            <h1 className="text-2xl font-bold tracking-tight text-slate-900 mb-2 flex items-center gap-2">
+              Tell us about your business <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 inline-block"></span>
             </h1>
             <p className="text-sm text-slate-500">
               This helps SUNNY's AI understand your brand and generate highly relevant content.
@@ -85,25 +113,45 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                   placeholder="e.g. Acme Corp"
                   aria-invalid={showErrors && !businessName.trim()}
                   aria-describedby={showErrors && !businessName.trim() ? "businessName-error" : undefined}
-                  className={`w-full px-3 py-2 bg-white border ${showErrors && !businessName.trim() ? 'border-red-500' : 'border-slate-200'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors`}
+                  className={`w-full h-[42.6px] px-3 py-2 bg-white border ${showErrors && !businessName.trim() ? 'border-red-500' : 'border-slate-200'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors`}
                 />
                 {showErrors && !businessName.trim() && <p id="businessName-error" className="text-red-500 text-[10px] mt-1" role="alert">Business Name is required</p>}
               </div>
               <div>
                 <label htmlFor="industry" className="block text-xs font-medium text-slate-700 mb-1">Industry <span className="text-red-500">*</span></label>
-                <select 
-                  id="industry"
-                  value={industry}
-                  onChange={(e) => setIndustry(e.target.value)}
-                  aria-invalid={showErrors && !industry}
-                  aria-describedby={showErrors && !industry ? "industry-error" : undefined}
-                  className={`w-full px-3 py-2 bg-white border ${showErrors && !industry ? 'border-red-500' : 'border-slate-200'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors appearance-none`}
-                >
-                  <option value="">Select an industry</option>
-                  <option value="tech">Technology</option>
-                  <option value="retail">Retail</option>
-                  <option value="services">Professional Services</option>
-                </select>
+                <div className="relative" ref={dropdownRef}>
+                  <button 
+                    type="button"
+                    id="industry"
+                    onClick={() => setIsIndustryOpen(!isIndustryOpen)}
+                    aria-invalid={showErrors && !industry}
+                    aria-describedby={showErrors && !industry ? "industry-error" : undefined}
+                    className={`w-full h-[42.6px] flex items-center px-3 py-2 pr-10 text-left bg-white border ${showErrors && !industry ? 'border-red-500' : (isIndustryOpen ? 'border-yellow-400 ring-2 ring-yellow-400' : 'border-slate-200')} rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors cursor-pointer ${!industry ? 'text-slate-500' : 'text-slate-900'}`}
+                  >
+                    {industry ? industriesList.find(i => i.value === industry)?.label : 'Select an industry'}
+                  </button>
+                  <div className="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-slate-500">
+                    <ChevronDown className={`w-4 h-4 transition-transform ${isIndustryOpen ? 'rotate-180' : ''}`} />
+                  </div>
+                  
+                  {isIndustryOpen && (
+                    <div className="absolute z-20 w-full mt-2 bg-white border border-slate-200 rounded-xl shadow-lg max-h-60 overflow-auto py-1">
+                      {industriesList.map((ind) => (
+                        <button
+                          key={ind.value}
+                          type="button"
+                          onClick={() => {
+                            setIndustry(ind.value);
+                            setIsIndustryOpen(false);
+                          }}
+                          className={`w-full text-left px-3 py-2 text-sm transition-colors ${industry === ind.value ? 'bg-yellow-50 text-yellow-900 font-medium' : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'}`}
+                        >
+                          {ind.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 {showErrors && !industry && <p id="industry-error" className="text-red-500 text-[10px] mt-1" role="alert">Industry is required</p>}
               </div>
             </div>
@@ -119,18 +167,19 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                 id="shortDescription"
                 value={shortDescription}
                 onChange={(e) => setShortDescription(e.target.value)}
+                maxLength={200}
                 placeholder="Briefly describe what your business does..."
                 rows={2}
                 aria-invalid={showErrors && !shortDescription.trim()}
                 aria-describedby={showErrors && !shortDescription.trim() ? "shortDescription-error" : undefined}
-                className={`w-full px-3 py-2 bg-white border ${showErrors && !shortDescription.trim() ? 'border-red-500' : 'border-slate-200'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors resize-none`}
+                className={`w-full h-[75.6px] px-3 py-2 bg-white border ${showErrors && !shortDescription.trim() ? 'border-red-500' : 'border-slate-200'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors resize-none`}
               ></textarea>
               {showErrors && !shortDescription.trim() && <p id="shortDescription-error" className="text-red-500 text-[10px] mt-1" role="alert">Short Description is required</p>}
             </div>
           </div>
           
           {/* Primary Goals */}
-          <div className="mb-6">
+          <div className="mb-[10px] pb-[14px] mt-[30px] pt-[14px]">
             <div className="flex items-center gap-2 mb-1">
               <Target className="w-4 h-4 text-yellow-500" />
               <h2 className="text-base font-bold text-slate-900">Primary Goals</h2>
@@ -233,14 +282,14 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                   id="locations"
                   type="text" 
                   placeholder="e.g. United States, London, Global"
-                  className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors"
+                  className="w-full h-[42.6px] pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors"
                 />
               </div>
             </div>
             
             <div className="pt-6 border-t border-slate-100 mt-6">
               <div className="flex items-center gap-2 mb-2">
-                <Swords className="w-5 h-5 text-indigo-600" />
+                <Swords className="w-5 h-5 text-yellow-500" />
                 <h2 className="text-base font-bold text-slate-900">Competitors</h2>
                 <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-md font-medium">Optional</span>
               </div>
@@ -259,7 +308,7 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                         onChange={(e) => updateCompetitor(index, e.target.value)}
                         placeholder={`https://competitor${index + 1}.com`}
                         aria-label={`Competitor URL ${index + 1}`}
-                        className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors"
+                        className="w-full h-[42.6px] pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors"
                       />
                     </div>
                     {index === competitors.length - 1 ? (
@@ -292,10 +341,6 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
               Skip
             </button>
             <div className="flex items-center gap-4">
-              <button onClick={onBack} className="text-xs text-slate-400 hover:text-slate-600 font-medium flex items-center gap-1">
-                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                Back
-              </button>
               <button onClick={handleNext} className="text-yellow-500 hover:text-yellow-600 text-xs font-bold transition-colors flex items-center gap-1">
                 Next
                 <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>

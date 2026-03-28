@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User, AlertCircle } from 'lucide-react';
 import { signInWithPopup, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, googleProvider, linkedinProvider } from '../firebase';
 
@@ -44,7 +44,11 @@ export default function SignUp({ onNext, onSignIn }: { onNext: () => void, onSig
       onNext();
     } catch (err: any) {
       console.error("Error signing up with email", err);
-      setError(err.message || 'Failed to create account');
+      if (err.code === 'auth/email-already-in-use') {
+        setError('This email is already registered. Please sign in  or use a different email instead.');
+      } else {
+        setError(err.message || 'Failed to create account');
+      }
     } finally {
       setLoading(false);
     }
@@ -70,7 +74,7 @@ export default function SignUp({ onNext, onSignIn }: { onNext: () => void, onSig
 
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 font-sans">
-      <div className="bg-white rounded-3xl shadow-xl w-full max-w-5xl flex overflow-hidden min-h-[600px]">
+      <div className="onboarding-card">
         
         {/* Left Column - Form */}
         <div className="w-full lg:w-1/2 p-10 lg:p-16 flex flex-col justify-center">
@@ -117,8 +121,9 @@ export default function SignUp({ onNext, onSignIn }: { onNext: () => void, onSig
           
           <form className="space-y-4" onSubmit={handleEmailSignUp}>
             {error && (
-              <div id="signup-error" className="p-3 bg-red-50 text-red-600 text-xs rounded-lg border border-red-100" role="alert">
-                {error}
+              <div id="signup-error" className="p-3.5 bg-red-50/80 text-red-700 text-sm font-medium rounded-xl border border-red-200 flex items-center gap-3 shadow-sm" role="alert">
+                <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+                <span>{error}</span>
               </div>
             )}
             
@@ -134,14 +139,13 @@ export default function SignUp({ onNext, onSignIn }: { onNext: () => void, onSig
                   required
                   aria-invalid={!!error}
                   aria-describedby={error ? "signup-error" : undefined}
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white transition-colors"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white transition-colors"
                 />
-                <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               </div>
             </div>
 
             <div>
-              <label htmlFor="email" className="block text-xs font-medium text-slate-700 mb-1">Work Email</label>
+              <label htmlFor="email" className="block text-xs font-medium text-slate-700 mb-1">Email</label>
               <div className="relative">
                 <input 
                   id="email"
@@ -152,9 +156,8 @@ export default function SignUp({ onNext, onSignIn }: { onNext: () => void, onSig
                   required
                   aria-invalid={!!error}
                   aria-describedby={error ? "signup-error" : undefined}
-                  className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white transition-colors"
+                  className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white transition-colors"
                 />
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
               </div>
             </div>
             
@@ -172,9 +175,8 @@ export default function SignUp({ onNext, onSignIn }: { onNext: () => void, onSig
                     required
                     aria-invalid={passwordTouched && !isPasswordValid}
                     aria-describedby="password-requirements"
-                    className={`w-full pl-10 pr-10 py-2.5 bg-slate-50 border ${passwordTouched && !isPasswordValid ? 'border-red-400 focus:ring-red-400' : 'border-slate-200 focus:ring-yellow-400'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:bg-white transition-colors`}
+                    className={`w-full pl-4 pr-10 py-2.5 bg-slate-50 border ${passwordTouched && !isPasswordValid ? 'border-red-400 focus:ring-red-400' : 'border-slate-200 focus:ring-yellow-400'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:bg-white transition-colors`}
                   />
-                  <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                   <button 
                     type="button" 
                     onClick={() => setShowPassword(!showPassword)}
@@ -184,7 +186,7 @@ export default function SignUp({ onNext, onSignIn }: { onNext: () => void, onSig
                     {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   </button>
                 </div>
-                <div id="password-requirements" className="mt-2 space-y-1">
+                <div id="password-requirements" className="mt-2 flex flex-wrap gap-x-4 gap-y-1">
                   <p className={`text-[10px] flex items-center gap-1.5 ${(passwordTouched || password) ? (isLengthValid ? 'text-emerald-600' : 'text-red-500') : 'text-slate-500'}`}>
                     <span className="w-1 h-1 rounded-full bg-current"></span> At least 8 characters
                   </p>
@@ -210,9 +212,8 @@ export default function SignUp({ onNext, onSignIn }: { onNext: () => void, onSig
                     required
                     aria-invalid={confirmPasswordTouched && !passwordsMatch}
                     aria-describedby={(confirmPasswordTouched || confirmPassword) && !passwordsMatch ? "confirm-password-error" : undefined}
-                    className={`w-full pl-10 pr-10 py-2.5 bg-slate-50 border ${confirmPasswordTouched && !passwordsMatch ? 'border-red-400 focus:ring-red-400' : 'border-slate-200 focus:ring-yellow-400'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:bg-white transition-colors`}
+                    className={`w-full pl-4 pr-10 py-2.5 bg-slate-50 border ${confirmPasswordTouched && !passwordsMatch ? 'border-red-400 focus:ring-red-400' : 'border-slate-200 focus:ring-yellow-400'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:bg-white transition-colors`}
                   />
-                  <Lock className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
                   <button 
                     type="button" 
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
@@ -232,9 +233,9 @@ export default function SignUp({ onNext, onSignIn }: { onNext: () => void, onSig
             
             <button 
               type="submit"
-              disabled={loading}
+              disabled={loading || !fullName || !email || !password || !confirmPassword}
               aria-busy={loading}
-              className="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-medium py-2.5 rounded-lg transition-colors mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-medium py-2.5 rounded-lg transition-colors mt-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-yellow-400"
             >
               {loading ? 'Creating Account...' : 'Create Account'}
             </button>

@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+@layer components {
+  .onboarding-card {
+    @apply bg-white rounded-3xl shadow-xl w-full max-w-5xl flex flex-col lg:flex-row overflow-hidden min-h-[600px] lg:min-h-[650px] my-auto;
+  }
+}
+
+/* Enforce minimum font size of 12px */
+.text-\[10px\], .text-\[11px\] {
+  font-size: 12px !important;
+  line-height: 16px !important;
+}

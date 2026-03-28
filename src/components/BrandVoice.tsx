@@ -18,10 +18,10 @@ export default function BrandVoice({ onNext, onBack }: { onNext: () => void, onB
 
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 font-sans">
-      <div className="bg-white rounded-3xl shadow-xl w-full max-w-[1024px] flex overflow-hidden h-[650px]">
+      <div className="onboarding-card">
         
         {/* Left Column - Controls */}
-        <div className="w-1/2 p-4 lg:p-6 flex flex-col overflow-y-auto border-r border-slate-100">
+        <div className="w-full lg:w-1/2 p-4 lg:p-6 flex flex-col overflow-y-auto border-b lg:border-b-0 lg:border-r border-slate-100">
           
           <div className="mb-4">
             <h1 className="text-xl font-bold tracking-tight text-slate-900 mb-1">
@@ -169,7 +169,7 @@ export default function BrandVoice({ onNext, onBack }: { onNext: () => void, onB
         </div>
 
         {/* Right Column - Chat & Finish */}
-        <div className="w-1/2 bg-slate-50 flex flex-col relative" style={{ paddingRight: '-4px', paddingBottom: '2px' }}>
+        <div className="w-full lg:w-1/2 bg-slate-50 flex flex-col relative" style={{ paddingRight: '-4px', paddingBottom: '2px' }}>
           
           {/* Chat Header */}
           <div className="p-3 border-b border-slate-200 bg-white flex items-center justify-between z-10">

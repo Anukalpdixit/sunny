@@ -14,7 +14,7 @@ export default function Dashboard({ onNavigate }: { onNavigate?: (tab: string) =
         <div className="flex-1 flex flex-col relative min-w-0">
           
           {/* Scrollable Area */}
-          <div className="flex-1 overflow-y-auto p-8 pb-48">
+          <div className="flex-1 overflow-y-auto pl-[13px] pt-[12px] mt-[26px] pr-8 pb-48">
             <div className="max-w-5xl mx-auto space-y-8">
               
               {/* Header */}

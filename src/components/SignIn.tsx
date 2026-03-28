@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, AlertCircle } from 'lucide-react';
 import { signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, googleProvider, linkedinProvider } from '../firebase';
 
@@ -45,7 +45,7 @@ export default function SignIn({ onNext, onSignUp }: { onNext: () => void, onSig
 
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 font-sans">
-      <div className="bg-white rounded-3xl shadow-xl w-full max-w-5xl flex overflow-hidden min-h-[600px]">
+      <div className="onboarding-card">
         
         {/* Left Column - Form */}
         <div className="w-full lg:w-1/2 p-10 lg:p-16 flex flex-col justify-center">
@@ -92,8 +92,9 @@ export default function SignIn({ onNext, onSignUp }: { onNext: () => void, onSig
           
           <form className="space-y-4" onSubmit={handleEmailSignIn}>
             {error && (
-              <div id="signin-error" className="p-3 bg-red-50 text-red-600 text-xs rounded-lg border border-red-100" role="alert">
-                {error}
+              <div id="signin-error" className="p-3.5 bg-red-50/80 text-red-700 text-sm font-medium rounded-xl border border-red-200 flex items-center gap-3 shadow-sm" role="alert">
+                <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+                <span>{error}</span>
               </div>
             )}
             <div>
@@ -141,9 +142,9 @@ export default function SignIn({ onNext, onSignUp }: { onNext: () => void, onSig
             
             <button 
               type="submit"
-              disabled={loading}
+              disabled={loading || !email || !password}
               aria-busy={loading}
-              className="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-medium py-2.5 rounded-lg transition-colors mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-medium py-2.5 rounded-lg transition-colors mt-2 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-yellow-400"
             >
               {loading ? 'Signing In...' : 'Sign In'}
             </button>

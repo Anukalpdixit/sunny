@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { 
   Sun, Home, Calendar, Megaphone, Lightbulb, Folder, BarChart2, 
-  Edit3, Rocket, Flame, Settings 
+  Edit3, Rocket, Flame, Settings, LogOut
 } from 'lucide-react';
 
 interface DashboardLayoutProps {
@@ -105,6 +105,13 @@ export default function DashboardLayout({ children, activeTab = 'calendar', onNa
           <button className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-900 transition-colors">
             <Settings className="w-5 h-5 text-slate-400" />
             Settings
+          </button>
+          <button 
+            onClick={() => onNavigate && onNavigate('signup')}
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-red-50 hover:text-red-600 transition-colors"
+          >
+            <LogOut className="w-5 h-5 text-slate-400 group-hover:text-red-500" />
+            Sign Out
           </button>
           
           <div className="flex items-center gap-3 px-3 py-2 mt-2">

@@ -15,7 +15,8 @@ export default function ConnectAccounts({ onNext, onBack }: { onNext: () => void
             
             {/* Default Posting Timezone */}
             <div className="flex flex-col sm:items-end">
-              <select className="w-full sm:w-auto px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors min-w-[200px] mb-[5px] mt-0 -mr-1">
+              <label htmlFor="timezone" className="sr-only">Default Posting Timezone</label>
+              <select id="timezone" className="w-full sm:w-auto px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors min-w-[200px] mb-[5px] mt-0 -mr-1">
                 <option>(GMT-08:00) Pacific Time (US & Canada)</option>
                 <option>(GMT-05:00) Eastern Time (US & Canada)</option>
                 <option>(GMT+00:00) London</option>
@@ -63,7 +64,7 @@ export default function ConnectAccounts({ onNext, onBack }: { onNext: () => void
                 </div>
               </div>
               
-              <button className="w-full py-1.5 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+              <button aria-label="Manage Instagram Connection" className="w-full py-1.5 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors">
                 Manage Connection
               </button>
             </div>
@@ -89,7 +90,7 @@ export default function ConnectAccounts({ onNext, onBack }: { onNext: () => void
                 </div>
               </div>
               
-              <button className="w-full py-1.5 bg-yellow-400 hover:bg-yellow-500 text-slate-900 rounded-lg text-xs font-medium transition-colors">
+              <button aria-label="Connect Facebook Account" className="w-full py-1.5 bg-yellow-400 hover:bg-yellow-500 text-slate-900 rounded-lg text-xs font-medium transition-colors">
                 Connect Account
               </button>
             </div>
@@ -115,7 +116,7 @@ export default function ConnectAccounts({ onNext, onBack }: { onNext: () => void
                 </div>
               </div>
               
-              <button className="w-full py-1.5 bg-yellow-400 hover:bg-yellow-500 text-slate-900 rounded-lg text-xs font-medium transition-colors">
+              <button aria-label="Connect LinkedIn Account" className="w-full py-1.5 bg-yellow-400 hover:bg-yellow-500 text-slate-900 rounded-lg text-xs font-medium transition-colors">
                 Connect Account
               </button>
             </div>
@@ -142,7 +143,7 @@ export default function ConnectAccounts({ onNext, onBack }: { onNext: () => void
                 </div>
               </div>
               
-              <button className="w-full py-1.5 border border-yellow-400 text-yellow-700 bg-white hover:bg-yellow-50 rounded-lg text-xs font-medium transition-colors">
+              <button aria-label="Reconnect X (Twitter) Account" className="w-full py-1.5 border border-yellow-400 text-yellow-700 bg-white hover:bg-yellow-50 rounded-lg text-xs font-medium transition-colors">
                 Reconnect Account
               </button>
             </div>
@@ -165,7 +166,7 @@ export default function ConnectAccounts({ onNext, onBack }: { onNext: () => void
                 </div>
               </div>
               
-              <button className="w-full py-1.5 bg-yellow-400 hover:bg-yellow-500 text-slate-900 rounded-lg text-xs font-medium transition-colors">
+              <button aria-label="Connect TikTok Account" className="w-full py-1.5 bg-yellow-400 hover:bg-yellow-500 text-slate-900 rounded-lg text-xs font-medium transition-colors">
                 Connect Account
               </button>
             </div>
@@ -188,7 +189,7 @@ export default function ConnectAccounts({ onNext, onBack }: { onNext: () => void
                 </div>
               </div>
               
-              <button className="w-full py-1.5 bg-yellow-400 hover:bg-yellow-500 text-slate-900 rounded-lg text-xs font-medium transition-colors">
+              <button aria-label="Connect YouTube Account" className="w-full py-1.5 bg-yellow-400 hover:bg-yellow-500 text-slate-900 rounded-lg text-xs font-medium transition-colors">
                 Connect Account
               </button>
             </div>

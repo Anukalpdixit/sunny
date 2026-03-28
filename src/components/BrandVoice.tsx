@@ -53,8 +53,9 @@ export default function BrandVoice({ onNext, onBack }: { onNext: () => void, onB
               </p>
               
               <div className="mb-3">
-                <label className="block text-[10px] font-medium text-slate-700 mb-1">Website URL</label>
+                <label htmlFor="websiteUrl" className="block text-[10px] font-medium text-slate-700 mb-1">Website URL</label>
                 <input 
+                  id="websiteUrl"
                   type="text" 
                   placeholder="https://yourwebsite.com"
                   className="w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors"
@@ -87,37 +88,37 @@ export default function BrandVoice({ onNext, onBack }: { onNext: () => void, onB
               <div className="space-y-3">
                 <div>
                   <div className="flex justify-between text-[10px] font-medium text-slate-700 mb-1.5">
-                    <span>Professional</span>
+                    <label htmlFor="tone1">Professional</label>
                     <span>Casual</span>
                   </div>
                   {!isAnalyzed ? (
                     <div className="w-full h-1.5 bg-slate-100 rounded-lg"></div>
                   ) : (
-                    <input type="range" min="0" max="100" value={tone1} onChange={(e) => setTone1(Number(e.target.value))} className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-yellow-500" />
+                    <input id="tone1" type="range" min="0" max="100" value={tone1} onChange={(e) => setTone1(Number(e.target.value))} className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-yellow-500" aria-label="Professional to Casual Tone" />
                   )}
                 </div>
                 
                 <div>
                   <div className="flex justify-between text-[10px] font-medium text-slate-700 mb-1.5">
-                    <span>Serious</span>
+                    <label htmlFor="tone2">Serious</label>
                     <span>Witty / Humorous</span>
                   </div>
                   {!isAnalyzed ? (
                     <div className="w-full h-1.5 bg-slate-100 rounded-lg"></div>
                   ) : (
-                    <input type="range" min="0" max="100" value={tone2} onChange={(e) => setTone2(Number(e.target.value))} className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-yellow-500" />
+                    <input id="tone2" type="range" min="0" max="100" value={tone2} onChange={(e) => setTone2(Number(e.target.value))} className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-yellow-500" aria-label="Serious to Witty Tone" />
                   )}
                 </div>
                 
                 <div>
                   <div className="flex justify-between text-[10px] font-medium text-slate-700 mb-1.5">
-                    <span>Informational</span>
+                    <label htmlFor="tone3">Informational</label>
                     <span>Storytelling</span>
                   </div>
                   {!isAnalyzed ? (
                     <div className="w-full h-1.5 bg-slate-100 rounded-lg"></div>
                   ) : (
-                    <input type="range" min="0" max="100" value={tone3} onChange={(e) => setTone3(Number(e.target.value))} className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-yellow-500" />
+                    <input id="tone3" type="range" min="0" max="100" value={tone3} onChange={(e) => setTone3(Number(e.target.value))} className="w-full h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-yellow-500" aria-label="Informational to Storytelling Tone" />
                   )}
                 </div>
               </div>
@@ -132,8 +133,9 @@ export default function BrandVoice({ onNext, onBack }: { onNext: () => void, onB
               
               <div className="space-y-3">
                 <div>
-                  <label className="block text-[10px] font-medium text-slate-700 mb-1">Words to use often</label>
+                  <label htmlFor="dos" className="block text-[10px] font-medium text-slate-700 mb-1">Words to use often</label>
                   <input 
+                    id="dos"
                     type="text" 
                     placeholder="e.g., innovative, seamless, growth"
                     className="w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors"
@@ -141,8 +143,9 @@ export default function BrandVoice({ onNext, onBack }: { onNext: () => void, onB
                 </div>
                 
                 <div>
-                  <label className="block text-[10px] font-medium text-slate-700 mb-1">Words to AVOID</label>
+                  <label htmlFor="donts" className="block text-[10px] font-medium text-slate-700 mb-1">Words to AVOID</label>
                   <input 
+                    id="donts"
                     type="text" 
                     placeholder="e.g., cheap, hack, trick"
                     className="w-full px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors"
@@ -312,7 +315,9 @@ export default function BrandVoice({ onNext, onBack }: { onNext: () => void, onB
           {/* Chat Input */}
           <div className="p-3 border-t border-slate-200 bg-white">
             <div className="relative">
+              <label htmlFor="chatInput" className="sr-only">Type a prompt to test the voice</label>
               <input 
+                id="chatInput"
                 type="text" 
                 placeholder="Type a prompt to test the voice..."
                 disabled={chatStage === 0}
@@ -320,6 +325,7 @@ export default function BrandVoice({ onNext, onBack }: { onNext: () => void, onB
               />
               <button 
                 disabled={chatStage === 0}
+                aria-label="Send message"
                 className="absolute right-1.5 top-1/2 -translate-y-1/2 w-6 h-6 bg-yellow-400 rounded-lg flex items-center justify-center text-slate-900 hover:bg-yellow-500 transition-colors disabled:opacity-50"
               >
                 <Send className="w-3 h-3" />

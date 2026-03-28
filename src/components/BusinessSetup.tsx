@@ -76,21 +76,27 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
           <div className="mb-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">Business Name <span className="text-red-500">*</span></label>
+                <label htmlFor="businessName" className="block text-xs font-medium text-slate-700 mb-1">Business Name <span className="text-red-500">*</span></label>
                 <input 
+                  id="businessName"
                   type="text" 
                   value={businessName}
                   onChange={(e) => setBusinessName(e.target.value)}
                   placeholder="e.g. Acme Corp"
+                  aria-invalid={showErrors && !businessName.trim()}
+                  aria-describedby={showErrors && !businessName.trim() ? "businessName-error" : undefined}
                   className={`w-full px-3 py-2 bg-white border ${showErrors && !businessName.trim() ? 'border-red-500' : 'border-slate-200'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors`}
                 />
-                {showErrors && !businessName.trim() && <p className="text-red-500 text-[10px] mt-1">Business Name is required</p>}
+                {showErrors && !businessName.trim() && <p id="businessName-error" className="text-red-500 text-[10px] mt-1" role="alert">Business Name is required</p>}
               </div>
               <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">Industry <span className="text-red-500">*</span></label>
+                <label htmlFor="industry" className="block text-xs font-medium text-slate-700 mb-1">Industry <span className="text-red-500">*</span></label>
                 <select 
+                  id="industry"
                   value={industry}
                   onChange={(e) => setIndustry(e.target.value)}
+                  aria-invalid={showErrors && !industry}
+                  aria-describedby={showErrors && !industry ? "industry-error" : undefined}
                   className={`w-full px-3 py-2 bg-white border ${showErrors && !industry ? 'border-red-500' : 'border-slate-200'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors appearance-none`}
                 >
                   <option value="">Select an industry</option>
@@ -98,25 +104,28 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                   <option value="retail">Retail</option>
                   <option value="services">Professional Services</option>
                 </select>
-                {showErrors && !industry && <p className="text-red-500 text-[10px] mt-1">Industry is required</p>}
+                {showErrors && !industry && <p id="industry-error" className="text-red-500 text-[10px] mt-1" role="alert">Industry is required</p>}
               </div>
             </div>
             
             <div>
               <div className="flex justify-between items-end mb-1">
-                <label className="block text-xs font-medium text-slate-700">Short Description <span className="text-red-500">*</span></label>
+                <label htmlFor="shortDescription" className="block text-xs font-medium text-slate-700">Short Description <span className="text-red-500">*</span></label>
                 <span className={`text-[10px] ${shortDescription.length > 200 ? 'text-red-500 font-medium' : 'text-slate-500 font-medium'}`}>
                   {shortDescription.length}/200 characters
                 </span>
               </div>
               <textarea 
+                id="shortDescription"
                 value={shortDescription}
                 onChange={(e) => setShortDescription(e.target.value)}
                 placeholder="Briefly describe what your business does..."
                 rows={2}
+                aria-invalid={showErrors && !shortDescription.trim()}
+                aria-describedby={showErrors && !shortDescription.trim() ? "shortDescription-error" : undefined}
                 className={`w-full px-3 py-2 bg-white border ${showErrors && !shortDescription.trim() ? 'border-red-500' : 'border-slate-200'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors resize-none`}
               ></textarea>
-              {showErrors && !shortDescription.trim() && <p className="text-red-500 text-[10px] mt-1">Short Description is required</p>}
+              {showErrors && !shortDescription.trim() && <p id="shortDescription-error" className="text-red-500 text-[10px] mt-1" role="alert">Short Description is required</p>}
             </div>
           </div>
           
@@ -134,6 +143,8 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                 return (
                   <button
                     key={goal.id}
+                    type="button"
+                    aria-pressed={isSelected}
                     onClick={() => toggleGoal(goal.id)}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors border ${
                       isSelected 
@@ -156,10 +167,13 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
               <h2 className="text-base font-bold text-slate-900">Target Audience</h2>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
-              <div 
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4" role="radiogroup" aria-label="Target Audience">
+              <button 
+                type="button"
+                role="radio"
+                aria-checked={selectedAudience === 'Professionals'}
                 onClick={() => setSelectedAudience('Professionals')}
-                className={`p-3 rounded-xl border cursor-pointer transition-colors relative ${
+                className={`p-3 rounded-xl border cursor-pointer transition-colors relative text-left w-full ${
                   selectedAudience === 'Professionals' 
                     ? 'border-yellow-400 bg-yellow-50/30' 
                     : 'border-slate-200 hover:border-yellow-300'
@@ -179,11 +193,14 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                     <Check className="w-2.5 h-2.5 text-white" />
                   </div>
                 )}
-              </div>
+              </button>
               
-              <div 
+              <button 
+                type="button"
+                role="radio"
+                aria-checked={selectedAudience === 'Students'}
                 onClick={() => setSelectedAudience('Students')}
-                className={`p-3 rounded-xl border cursor-pointer transition-colors relative ${
+                className={`p-3 rounded-xl border cursor-pointer transition-colors relative text-left w-full ${
                   selectedAudience === 'Students' 
                     ? 'border-yellow-400 bg-yellow-50/30' 
                     : 'border-slate-200 hover:border-yellow-300'
@@ -203,16 +220,17 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                     <Check className="w-2.5 h-2.5 text-white" />
                   </div>
                 )}
-              </div>
+              </button>
             </div>
             
             <div className="mb-4">
-              <label className="block text-[11px] font-medium text-slate-700 mb-1">Locations</label>
+              <label htmlFor="locations" className="block text-[11px] font-medium text-slate-700 mb-1">Locations</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <MapPin className="w-3.5 h-3.5 text-slate-400" />
                 </div>
                 <input 
+                  id="locations"
                   type="text" 
                   placeholder="e.g. United States, London, Global"
                   className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors"
@@ -240,19 +258,24 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                         value={comp}
                         onChange={(e) => updateCompetitor(index, e.target.value)}
                         placeholder={`https://competitor${index + 1}.com`}
+                        aria-label={`Competitor URL ${index + 1}`}
                         className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors"
                       />
                     </div>
                     {index === competitors.length - 1 ? (
                       <button 
+                        type="button"
                         onClick={addCompetitor}
+                        aria-label="Add competitor"
                         className="w-9 h-9 flex items-center justify-center border border-dashed border-slate-300 rounded-lg text-slate-400 hover:text-slate-600 hover:border-slate-400 transition-colors flex-shrink-0"
                       >
                         <Plus className="w-4 h-4" />
                       </button>
                     ) : (
                       <button 
+                        type="button"
                         onClick={() => removeCompetitor(index)}
+                        aria-label={`Remove competitor ${index + 1}`}
                         className="w-9 h-9 flex items-center justify-center text-red-400 hover:text-red-500 transition-colors flex-shrink-0"
                       >
                         <Trash2 className="w-4 h-4" />

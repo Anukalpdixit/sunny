@@ -9,9 +9,14 @@ import SignUp from './components/SignUp';
 import BusinessSetup from './components/BusinessSetup';
 import ConnectAccounts from './components/ConnectAccounts';
 import BrandVoice from './components/BrandVoice';
+import ContentCalendar from './components/ContentCalendar';
+import IdeasInspiration from './components/IdeasInspiration';
+import Campaigns from './components/Campaigns';
+import GeneratePost from './components/GeneratePost';
+import Dashboard from './components/Dashboard';
 
 export default function App() {
-  const [step, setStep] = useState<'welcome' | 'signin' | 'signup' | 'business' | 'connect' | 'brand'>('signup');
+  const [step, setStep] = useState<'welcome' | 'signin' | 'signup' | 'business' | 'connect' | 'brand' | 'dashboard' | 'calendar' | 'ideas' | 'campaigns' | 'post'>('dashboard');
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
@@ -28,7 +33,27 @@ export default function App() {
       )}
 
       {step === 'brand' && (
-        <BrandVoice onNext={() => console.log('Finish Onboarding')} onBack={() => setStep('connect')} />
+        <BrandVoice onNext={() => setStep('dashboard')} onBack={() => setStep('connect')} />
+      )}
+
+      {step === 'dashboard' && (
+        <Dashboard onNavigate={setStep} />
+      )}
+
+      {step === 'calendar' && (
+        <ContentCalendar onNavigate={setStep} />
+      )}
+
+      {step === 'ideas' && (
+        <IdeasInspiration onNavigate={setStep} />
+      )}
+
+      {step === 'campaigns' && (
+        <Campaigns onNavigate={setStep} />
+      )}
+
+      {step === 'post' && (
+        <GeneratePost onNavigate={setStep} />
       )}
     </div>
   );

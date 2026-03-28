@@ -34,37 +34,37 @@ export default function StepperLayout({
           </div>
           
           {/* Stepper */}
-          <div className="flex-1 flex items-center justify-center">
-            <div className="flex items-center gap-3">
+          <nav aria-label="Progress" className="flex-1 flex items-center justify-center">
+            <ol className="flex items-center gap-3">
               {[1, 2, 3].map((step) => {
                 const isCompleted = step < currentStep;
                 const isCurrent = step === currentStep;
                 
                 return (
                   <React.Fragment key={step}>
-                    <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium transition-colors ${
+                    <li aria-current={isCurrent ? 'step' : undefined} className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-medium transition-colors ${
                       isCompleted ? 'bg-emerald-500 text-white' :
                       isCurrent ? 'bg-yellow-400 text-slate-900' :
                       'bg-slate-100 text-slate-400'
                     }`}>
                       {isCompleted ? (
-                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
+                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" /></svg>
                       ) : (
-                        step
+                        <span className={isCompleted ? "sr-only" : ""}>{isCompleted ? "Completed" : step}</span>
                       )}
-                    </div>
+                    </li>
                     
                     {step < 3 && (
-                      <div className={`w-8 h-0.5 ${isCompleted ? 'bg-emerald-500' : 'bg-slate-200'}`}></div>
+                      <li aria-hidden="true" className={`w-8 h-0.5 ${isCompleted ? 'bg-emerald-500' : 'bg-slate-200'}`}></li>
                     )}
                   </React.Fragment>
                 );
               })}
-              <span className="ml-4 text-sm font-medium text-slate-500">
+              <li className="ml-4 text-sm font-medium text-slate-500" aria-live="polite">
                 Step {currentStep}/{totalSteps}: {stepTitle}
-              </span>
-            </div>
-          </div>
+              </li>
+            </ol>
+          </nav>
           
           {/* Actions */}
           <div className="flex items-center justify-end gap-4 w-1/4">

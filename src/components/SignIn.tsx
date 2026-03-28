@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
 import { signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth, googleProvider, linkedinProvider } from '../firebase';
@@ -92,39 +92,46 @@ export default function SignIn({ onNext, onSignUp }: { onNext: () => void, onSig
           
           <form className="space-y-4" onSubmit={handleEmailSignIn}>
             {error && (
-              <div className="p-3 bg-red-50 text-red-600 text-xs rounded-lg border border-red-100">
+              <div id="signin-error" className="p-3 bg-red-50 text-red-600 text-xs rounded-lg border border-red-100" role="alert">
                 {error}
               </div>
             )}
             <div>
-              <label className="block text-xs font-medium text-slate-700 mb-1">Email</label>
+              <label htmlFor="email" className="block text-xs font-medium text-slate-700 mb-1">Email</label>
               <input 
+                id="email"
                 type="email" 
                 placeholder="michael.williams@gmail.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                aria-invalid={!!error}
+                aria-describedby={error ? "signin-error" : undefined}
                 className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white transition-colors"
               />
             </div>
             
             <div>
               <div className="flex justify-between items-center mb-1">
-                <label className="block text-xs font-medium text-slate-700">Password</label>
+                <label htmlFor="password" className="block text-xs font-medium text-slate-700">Password</label>
                 <a href="#" className="text-xs text-yellow-500 hover:text-yellow-600 font-medium">Forgot password?</a>
               </div>
               <div className="relative">
                 <input 
+                  id="password"
                   type={showPassword ? "text" : "password"} 
                   placeholder="••••••••••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  aria-invalid={!!error}
+                  aria-describedby={error ? "signin-error" : undefined}
                   className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:bg-white transition-colors"
                 />
                 <button 
                   type="button" 
                   onClick={() => setShowPassword(!showPassword)}
+                  aria-label={showPassword ? "Hide password" : "Show password"}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -135,6 +142,7 @@ export default function SignIn({ onNext, onSignUp }: { onNext: () => void, onSig
             <button 
               type="submit"
               disabled={loading}
+              aria-busy={loading}
               className="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-medium py-2.5 rounded-lg transition-colors mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Signing In...' : 'Sign In'}

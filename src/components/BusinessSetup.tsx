@@ -227,22 +227,22 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                 onClick={() => setSelectedAudience('Professionals')}
                 className={`p-3 rounded-xl border cursor-pointer transition-colors relative text-left w-full ${
                   selectedAudience === 'Professionals' 
-                    ? 'border-yellow-400 bg-yellow-50/30' 
-                    : 'border-slate-200 hover:border-yellow-300'
+                    ? 'border-yellow-400 bg-yellow-400' 
+                    : 'border-slate-200 hover:border-yellow-300 bg-white'
                 }`}
               >
                 <div className="flex items-start gap-2.5">
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${selectedAudience === 'Professionals' ? 'bg-yellow-100 text-yellow-600' : 'bg-slate-100 text-slate-500'}`}>
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${selectedAudience === 'Professionals' ? 'bg-slate-900 text-yellow-400' : 'bg-slate-100 text-slate-500'}`}>
                     <Users className="w-3 h-3" />
                   </div>
                   <div>
-                    <h3 className={`text-xs font-semibold ${selectedAudience === 'Professionals' ? 'text-yellow-900' : 'text-slate-900'}`}>Professionals</h3>
-                    <p className="text-[10px] text-slate-500 mt-0.5">Ages 25-45, B2B focus</p>
+                    <h3 className={`text-xs font-semibold ${selectedAudience === 'Professionals' ? 'text-slate-900' : 'text-slate-900'}`}>Professionals</h3>
+                    <p className={`text-[10px] mt-0.5 ${selectedAudience === 'Professionals' ? 'text-slate-800' : 'text-slate-500'}`}>Ages 25-45, B2B focus</p>
                   </div>
                 </div>
                 {selectedAudience === 'Professionals' && (
-                  <div className="absolute top-3 right-3 w-3.5 h-3.5 bg-yellow-500 rounded flex items-center justify-center">
-                    <Check className="w-2.5 h-2.5 text-white" />
+                  <div className="absolute top-3 right-3 w-3.5 h-3.5 bg-slate-900 rounded flex items-center justify-center">
+                    <Check className="w-2.5 h-2.5 text-yellow-400" />
                   </div>
                 )}
               </button>
@@ -254,22 +254,22 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                 onClick={() => setSelectedAudience('Students')}
                 className={`p-3 rounded-xl border cursor-pointer transition-colors relative text-left w-full ${
                   selectedAudience === 'Students' 
-                    ? 'border-yellow-400 bg-yellow-50/30' 
-                    : 'border-slate-200 hover:border-yellow-300'
+                    ? 'border-yellow-400 bg-yellow-400' 
+                    : 'border-slate-200 hover:border-yellow-300 bg-white'
                 }`}
               >
                 <div className="flex items-start gap-2.5">
-                  <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${selectedAudience === 'Students' ? 'bg-yellow-100 text-yellow-600' : 'bg-slate-100 text-slate-500'}`}>
+                  <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${selectedAudience === 'Students' ? 'bg-slate-900 text-yellow-400' : 'bg-slate-100 text-slate-500'}`}>
                     <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14v7" /></svg>
                   </div>
                   <div>
-                    <h3 className={`text-xs font-semibold ${selectedAudience === 'Students' ? 'text-yellow-900' : 'text-slate-900'}`}>Students / Gen Z</h3>
-                    <p className="text-[10px] text-slate-500 mt-0.5">Ages 16-24, Trend-focused</p>
+                    <h3 className={`text-xs font-semibold ${selectedAudience === 'Students' ? 'text-slate-900' : 'text-slate-900'}`}>Students / Gen Z</h3>
+                    <p className={`text-[10px] mt-0.5 ${selectedAudience === 'Students' ? 'text-slate-800' : 'text-slate-500'}`}>Ages 16-24, Trend-focused</p>
                   </div>
                 </div>
                 {selectedAudience === 'Students' && (
-                  <div className="absolute top-3 right-3 w-3.5 h-3.5 bg-yellow-500 rounded flex items-center justify-center">
-                    <Check className="w-2.5 h-2.5 text-white" />
+                  <div className="absolute top-3 right-3 w-3.5 h-3.5 bg-slate-900 rounded flex items-center justify-center">
+                    <Check className="w-2.5 h-2.5 text-yellow-400" />
                   </div>
                 )}
               </button>

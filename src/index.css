@@ -2,7 +2,7 @@
 
 @layer components {
   .onboarding-card {
-    @apply bg-white rounded-3xl shadow-xl w-full max-w-5xl flex flex-col lg:flex-row overflow-hidden min-h-[600px] lg:min-h-[650px] my-auto;
+    @apply bg-white rounded-3xl shadow-xl w-full max-w-[1024px] flex flex-col lg:flex-row overflow-hidden min-h-[600px] lg:min-h-[650px] my-auto;
   }
 }
 

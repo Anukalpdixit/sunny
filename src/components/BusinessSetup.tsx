@@ -78,11 +78,11 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
   ];
 
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 py-8 font-sans">
+    <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 font-sans">
       <div className="onboarding-card">
         
         {/* Main Content - Form */}
-        <div className="w-full p-6 lg:p-10 flex flex-col">
+        <div className="w-full p-10 lg:p-16 flex flex-col justify-center">
           <div className="mb-6">
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 mb-2 flex items-center gap-2">
               Tell us about your business <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 inline-block"></span>

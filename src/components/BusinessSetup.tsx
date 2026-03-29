@@ -79,7 +79,7 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
 
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 font-sans">
-      <div className="onboarding-card">
+      <div className="onboarding-card pt-0 px-0 pb-0 w-[1024px] my-[40px]">
         
         {/* Main Content - Form */}
         <div className="w-full p-10 lg:p-16 flex flex-col justify-center">
@@ -95,9 +95,9 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
           <div className="mb-6">
             <p className="text-xs font-medium text-slate-500 mb-2">Step 1 of 3</p>
             <div className="flex gap-1">
-              <div className="h-1 flex-1 bg-yellow-400 rounded-full"></div>
-              <div className="h-1 flex-1 bg-slate-100 rounded-full"></div>
-              <div className="h-1 flex-1 bg-slate-100 rounded-full"></div>
+              <div className="h-1 flex-1 bg-yellow-400 rounded-full mr-[10px]"></div>
+              <div className="h-1 flex-1 bg-slate-100 rounded-full mr-[10px]"></div>
+              <div className="h-1 flex-1 bg-slate-100 rounded-full mr-[-10px]"></div>
             </div>
           </div>
           

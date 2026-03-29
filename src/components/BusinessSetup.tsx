@@ -39,7 +39,7 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
   const [competitors, setCompetitors] = useState<string[]>(['']);
 
   const handleNext = () => {
-    if (!businessName.trim() || !industry || !shortDescription.trim()) {
+    if (!businessName.trim() || !industry || !shortDescription.trim() || selectedGoals.length === 0) {
       setShowErrors(true);
       return;
     }
@@ -172,7 +172,7 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                 rows={2}
                 aria-invalid={showErrors && !shortDescription.trim()}
                 aria-describedby={showErrors && !shortDescription.trim() ? "shortDescription-error" : undefined}
-                className={`w-full h-[75.6px] px-3 py-2 bg-white border ${showErrors && !shortDescription.trim() ? 'border-red-500' : 'border-slate-200'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors resize-none`}
+                className={`w-full h-[75.6px] px-3 py-2 bg-white border ${showErrors && !shortDescription.trim() ? 'border-red-500' : 'border-slate-200'} rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-colors resize-none mb-[-30px] mt-[6px] mr-[3px]`}
               ></textarea>
               {showErrors && !shortDescription.trim() && <p id="shortDescription-error" className="text-red-500 text-[10px] mt-1" role="alert">Short Description is required</p>}
             </div>
@@ -182,7 +182,7 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
           <div className="mb-[10px] pb-[14px] mt-[30px] pt-[14px]">
             <div className="flex items-center gap-2 mb-1">
               <Target className="w-4 h-4 text-yellow-500" />
-              <h2 className="text-base font-bold text-slate-900">Primary Goals</h2>
+              <h2 className="text-base font-bold text-slate-900">Primary Goals <span className="text-red-500">*</span></h2>
             </div>
             <p className="text-[11px] text-slate-500 mb-3">Select up to 3 main objectives for your social media.</p>
             
@@ -198,7 +198,9 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors border ${
                       isSelected 
                         ? 'bg-yellow-400 text-slate-900 border-yellow-400' 
-                        : 'bg-white text-slate-600 border-slate-200 hover:border-yellow-300 hover:bg-yellow-50'
+                        : showErrors && selectedGoals.length === 0
+                          ? 'bg-white text-slate-600 border-red-500 hover:border-red-500 hover:bg-red-50'
+                          : 'bg-white text-slate-600 border-slate-200 hover:border-yellow-300 hover:bg-yellow-50'
                     }`}
                   >
                     {goal.icon}
@@ -207,6 +209,7 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                 );
               })}
             </div>
+            {showErrors && selectedGoals.length === 0 && <p className="text-red-500 text-[10px] mt-2" role="alert">Please select at least one primary goal</p>}
           </div>
           
           {/* Target Audience */}
@@ -315,8 +318,13 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
                       <button 
                         type="button"
                         onClick={addCompetitor}
+                        disabled={!competitors[0].trim()}
                         aria-label="Add competitor"
-                        className="w-9 h-9 flex items-center justify-center border border-dashed border-slate-300 rounded-lg text-slate-400 hover:text-slate-600 hover:border-slate-400 transition-colors flex-shrink-0"
+                        className={`w-9 h-9 flex items-center justify-center border border-dashed rounded-lg transition-colors flex-shrink-0 ${
+                          !competitors[0].trim() 
+                            ? 'border-slate-200 text-slate-300 cursor-not-allowed' 
+                            : 'border-slate-300 text-slate-400 hover:text-slate-600 hover:border-slate-400'
+                        }`}
                       >
                         <Plus className="w-4 h-4" />
                       </button>

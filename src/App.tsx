@@ -16,13 +16,13 @@ import GeneratePost from './components/GeneratePost';
 import Dashboard from './components/Dashboard';
 
 export default function App() {
-  const [step, setStep] = useState<'welcome' | 'signin' | 'signup' | 'business' | 'connect' | 'brand' | 'dashboard' | 'calendar' | 'ideas' | 'campaigns' | 'post'>('dashboard');
+  const [step, setStep] = useState<'welcome' | 'signin' | 'signup' | 'business' | 'connect' | 'brand' | 'dashboard' | 'calendar' | 'ideas' | 'campaigns' | 'post'>('calendar');
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans">
       {step === 'signup' && <SignUp onNext={() => setStep('welcome')} onSignIn={() => setStep('signin')} />}
-      {step === 'signin' && <SignIn onNext={() => setStep('welcome')} onSignUp={() => setStep('signup')} />}
-      {step === 'welcome' && <Welcome onNext={() => setStep('business')} />}
+      {step === 'signin' && <SignIn onNext={() => setStep('calendar')} onSignUp={() => setStep('signup')} />}
+      {step === 'welcome' && <Welcome onNext={() => setStep('business')} onSkip={() => setStep('calendar')} />}
       
       {step === 'business' && (
         <BusinessSetup onNext={() => setStep('connect')} onBack={() => setStep('welcome')} />
@@ -33,7 +33,7 @@ export default function App() {
       )}
 
       {step === 'brand' && (
-        <BrandVoice onNext={() => setStep('dashboard')} onBack={() => setStep('connect')} />
+        <BrandVoice onNext={() => setStep('calendar')} onBack={() => setStep('connect')} />
       )}
 
       {step === 'dashboard' && (

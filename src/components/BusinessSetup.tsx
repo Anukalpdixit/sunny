@@ -345,7 +345,7 @@ export default function BusinessSetup({ onNext, onBack }: { onNext: () => void, 
           </div>
           
           <div className="mt-auto pt-4 border-t border-slate-100 flex items-center justify-between">
-            <button onClick={handleNext} className="text-xs text-slate-400 hover:text-slate-600 font-medium transition-colors">
+            <button onClick={onNext} className="text-xs text-slate-400 hover:text-slate-600 font-medium transition-colors">
               Skip
             </button>
             <div className="flex items-center gap-4">

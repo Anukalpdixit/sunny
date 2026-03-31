@@ -1,6 +1,6 @@
 import { Check } from 'lucide-react';
 
-export default function Welcome({ onNext }: { onNext: () => void }) {
+export default function Welcome({ onNext, onSkip }: { onNext: () => void, onSkip?: () => void }) {
   return (
     <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4 py-8 font-sans">
       <div className="onboarding-card">
@@ -66,7 +66,7 @@ export default function Welcome({ onNext }: { onNext: () => void }) {
               Start Setup
             </button>
             <button 
-              onClick={onNext}
+              onClick={onSkip || onNext}
               className="w-full text-xs text-slate-500 hover:text-slate-700 font-medium py-1.5 transition-colors"
             >
               Skip for now

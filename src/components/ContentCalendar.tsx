@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   Calendar, Clock, Settings, ChevronDown, Wand2, 
   MoreVertical, Plus, Send, FileSpreadsheet, 
